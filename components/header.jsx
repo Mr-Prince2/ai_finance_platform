@@ -10,7 +10,8 @@ const Header = async () => {
   await checkUser();
 
   return (
-    <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
+    // FIX: Replaced bg-white/80 with bg-background/80 and added border-border
+    <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md z-50 border-b border-border">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/">
           <Image
@@ -22,15 +23,16 @@ const Header = async () => {
           />
         </Link>
 
-        {/* Navigation Links - Different for signed in/out users */}
+        {/* Navigation Links */}
         <div className="hidden md:flex items-center space-x-8">
           <SignedOut>
-            <a href="#features" className="text-gray-600 hover:text-blue-600">
+            {/* FIX: Replaced text-gray-600 with text-muted-foreground */}
+            <a href="#features" className="text-muted-foreground hover:text-blue-600">
               Features
             </a>
             <a
               href="#testimonials"
-              className="text-gray-600 hover:text-blue-600"
+              className="text-muted-foreground hover:text-blue-600"
             >
               Testimonials
             </a>
@@ -42,7 +44,8 @@ const Header = async () => {
           <SignedIn>
             <Link
               href="/dashboard"
-              className="text-gray-600 hover:text-blue-600 flex items-center gap-2"
+              // FIX: Replaced text-gray-600 with text-muted-foreground
+              className="text-muted-foreground hover:text-blue-600 flex items-center gap-2"
             >
               <Button variant="outline">
                 <LayoutDashboard size={18} />
