@@ -54,8 +54,17 @@ module.exports = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+		keyframes: {
+			'fade-breath': {
+			'0%, 100%': { opacity: '0.4', filter: 'drop-shadow(0 0 12px rgba(129, 140, 248, 0.2))' },
+			'50%': { opacity: '1', filter: 'drop-shadow(0 0 20px rgba(129, 140, 248, 0.6))' },
+			},
+		},
+      	animation: {
+        	'logo-fade': 'fade-breath 4s ease-in-out infinite',
   		}
-  	}
+	}
   },
   plugins: [require("tailwindcss-animate")],
 };

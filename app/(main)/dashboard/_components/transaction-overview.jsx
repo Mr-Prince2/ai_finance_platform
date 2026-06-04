@@ -10,7 +10,7 @@ import {
   Legend,
 } from "recharts";
 import { format } from "date-fns";
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, History, PieChart as PieIcon, Wallet } from "lucide-react";
 
 import {
   Select,
@@ -22,14 +22,15 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
+// Optimized Kuber Palette: Vibrant but dark-mode friendly
 const COLORS = [
-  "#FF6B6B",
-  "#4ECDC4",
-  "#45B7D1",
-  "#96CEB4",
-  "#FFEEAD",
-  "#D4A5A5",
-  "#9FA8DA",
+  "hsl(var(--primary))",
+  "#3b82f6",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#ec4899",
 ];
 
 export function DashboardOverview({ accounts, transactions }) {
@@ -37,17 +38,14 @@ export function DashboardOverview({ accounts, transactions }) {
     accounts.find((a) => a.isDefault)?.id || accounts[0]?.id
   );
 
-  // Filter transactions for selected account
   const accountTransactions = transactions.filter(
     (t) => t.accountId === selectedAccountId
   );
 
-  // Get recent transactions (last 5)
   const recentTransactions = accountTransactions
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
 
-  // Calculate expense breakdown for current month
   const currentDate = new Date();
   const currentMonthExpenses = accountTransactions.filter((t) => {
     const transactionDate = new Date(t.date);
@@ -58,17 +56,12 @@ export function DashboardOverview({ accounts, transactions }) {
     );
   });
 
-  // Group expenses by category
   const expensesByCategory = currentMonthExpenses.reduce((acc, transaction) => {
     const category = transaction.category;
-    if (!acc[category]) {
-      acc[category] = 0;
-    }
-    acc[category] += transaction.amount;
+    acc[category] = (acc[category] || 0) + transaction.amount;
     return acc;
   }, {});
 
-  // Format data for pie chart
   const pieChartData = Object.entries(expensesByCategory).map(
     ([category, amount]) => ({
       name: category,
@@ -77,23 +70,23 @@ export function DashboardOverview({ accounts, transactions }) {
   );
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-6 md:grid-cols-2">
       {/* Recent Transactions Card */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle className="text-base font-normal">
-            Recent Transactions
-          </CardTitle>
-          <Select
-            value={selectedAccountId}
-            onValueChange={setSelectedAccountId}
-          >
-            <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Select account" />
+      <Card className="border-border/50 bg-card/40 backdrop-blur-sm shadow-xl">
+        <CardHeader className="flex flex-row items-center justify-between pb-6">
+          <div className="flex items-center gap-2">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <History className="w-4 h-4 text-primary" />
+            </div>
+            <CardTitle className="text-lg font-bold">Recent Activity</CardTitle>
+          </div>
+          <Select value={selectedAccountId} onValueChange={setSelectedAccountId}>
+            <SelectTrigger className="w-[160px] bg-background/50 border-border/50">
+              <SelectValue placeholder="Account" />
             </SelectTrigger>
             <SelectContent>
               {accounts.map((account) => (
-                <SelectItem key={account.id} value={account.id}>
+                <SelectItem key={account.id} value={account.id} className="capitalize">
                   {account.name}
                 </SelectItem>
               ))}
@@ -101,41 +94,42 @@ export function DashboardOverview({ accounts, transactions }) {
           </Select>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-1">
             {recentTransactions.length === 0 ? (
-              <p className="text-center text-muted-foreground py-4">
-                No recent transactions
-              </p>
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <Wallet className="w-12 h-12 text-muted-foreground/20 mb-4" />
+                <p className="text-muted-foreground text-sm font-medium">No transactions found</p>
+              </div>
             ) : (
-              recentTransactions.map((transaction) => (
+              recentTransactions.map((transaction, i) => (
                 <div
                   key={transaction.id}
-                  className="flex items-center justify-between"
+                  className={cn(
+                    "flex items-center justify-between p-3 rounded-xl transition-colors hover:bg-muted/30 group",
+                    i !== recentTransactions.length - 1 && "border-b border-border/20"
+                  )}
                 >
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {transaction.description || "Untitled Transaction"}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {format(new Date(transaction.date), "PP")}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div
-                      className={cn(
-                        "flex items-center",
-                        transaction.type === "EXPENSE"
-                          ? "text-red-500"
-                          : "text-green-500"
-                      )}
-                    >
-                      {transaction.type === "EXPENSE" ? (
-                        <ArrowDownRight className="mr-1 h-4 w-4" />
-                      ) : (
-                        <ArrowUpRight className="mr-1 h-4 w-4" />
-                      )}
-                      ${transaction.amount.toFixed(2)}
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "p-2 rounded-lg transition-transform group-hover:scale-110",
+                      transaction.type === "EXPENSE" ? "bg-rose-500/10 text-rose-500" : "bg-emerald-500/10 text-emerald-500"
+                    )}>
+                      {transaction.type === "EXPENSE" ? <ArrowDownRight className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4" />}
                     </div>
+                    <div className="space-y-0.5">
+                      <p className="text-sm font-semibold capitalize group-hover:text-primary transition-colors">
+                        {transaction.description || "Untitled"}
+                      </p>
+                      <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-tight">
+                        {format(new Date(transaction.date), "MMM dd, yyyy")} • {transaction.category}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={cn(
+                    "text-sm font-mono font-bold",
+                    transaction.type === "EXPENSE" ? "text-rose-500" : "text-emerald-500"
+                  )}>
+                    {transaction.type === "EXPENSE" ? "-" : "+"}${transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </div>
                 </div>
               ))
@@ -145,46 +139,56 @@ export function DashboardOverview({ accounts, transactions }) {
       </Card>
 
       {/* Expense Breakdown Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base font-normal">
-            Monthly Expense Breakdown
-          </CardTitle>
+      <Card className="border-border/50 bg-card/40 backdrop-blur-sm shadow-xl overflow-hidden">
+        <CardHeader className="flex flex-row items-center gap-2 pb-2">
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <PieIcon className="w-4 h-4 text-primary" />
+          </div>
+          <CardTitle className="text-lg font-bold">Monthly Breakdown</CardTitle>
         </CardHeader>
-        <CardContent className="p-0 pb-5">
+        <CardContent>
           {pieChartData.length === 0 ? (
-            <p className="text-center text-muted-foreground py-4">
-              No expenses this month
-            </p>
+            <div className="h-[300px] flex flex-col items-center justify-center text-center">
+               <div className="w-32 h-32 rounded-full border-4 border-dashed border-border/30 mb-4" />
+               <p className="text-muted-foreground text-sm font-medium">No expenses tracked this month</p>
+            </div>
           ) : (
-            <div className="h-[300px]">
+            <div className="h-[320px] w-full mt-4">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={pieChartData}
                     cx="50%"
                     cy="50%"
-                    outerRadius={80}
-                    fill="#8884d8"
+                    innerRadius={70} // Makes it a Donut chart
+                    outerRadius={100}
+                    paddingAngle={5}
                     dataKey="value"
-                    label={({ name, value }) => `${name}: $${value.toFixed(2)}`}
                   >
                     {pieChartData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={COLORS[index % COLORS.length]}
+                        className="stroke-background hover:opacity-80 transition-opacity"
+                        strokeWidth={2}
                       />
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value) => `$${value.toFixed(2)}`}
                     contentStyle={{
-                      backgroundColor: "hsl(var(--popover))",
+                      backgroundColor: "hsl(var(--card))",
                       border: "1px solid hsl(var(--border))",
-                      borderRadius: "var(--radius)",
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.3)",
                     }}
+                    itemStyle={{ color: "hsl(var(--foreground))", fontSize: "12px", fontWeight: "bold" }}
                   />
-                  <Legend />
+                  <Legend 
+                    verticalAlign="bottom" 
+                    align="center"
+                    iconType="circle"
+                    formatter={(value) => <span className="text-xs font-medium text-muted-foreground uppercase">{value}</span>}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
