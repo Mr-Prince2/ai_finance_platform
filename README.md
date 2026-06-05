@@ -4,70 +4,70 @@ Kuber is a full-stack, enterprise-grade AI Finance Platform designed to help use
 ## 🚀 Key Features
 ##  🖥️ Premium UI/UX & High Performance
 # Modern Dark Theme:
-     A premium, low-contrast dark interface optimized for data-dense charting layouts using Tailwind CSS.
+A premium, low-contrast dark interface optimized for data-dense charting layouts using Tailwind CSS.
 
 # Typographic Animations: 
-    Zero-asset custom CSS text effects (animate-logo-fade) inside a clean glassmorphic header, eliminating image caching locks and enhancing First Contentful Paint (FCP).
+Zero-asset custom CSS text effects (animate-logo-fade) inside a clean glassmorphic header, eliminating image caching locks and enhancing First Contentful Paint (FCP).
 
 # Responsive Layout Grid:
-     A fluid layout grid wrapper using Tailwind breakpoints designed to effortlessly transition from mobile matrix scales to wide tablet/desktop monitors.
+A fluid layout grid wrapper using Tailwind breakpoints designed to effortlessly transition from mobile matrix scales to wide tablet/desktop monitors.
 
 # Optimistic UI Updates:
-     Instant visual state updates via React 19's useOptimistic hook, keeping operations fast by bypassing server action roundtrips.
+Instant visual state updates via React 19's useOptimistic hook, keeping operations fast by bypassing server action roundtrips.
 
 ## 🤖 Intelligent AI Integrations (Google Gemini AI)
-    Smart Receipt Scanner: Upload receipt images directly to have the platform parse line items, suggest semantic category associations, structure timestamps, and calculate totals instantly.
+Smart Receipt Scanner: Upload receipt images directly to have the platform parse line items, suggest semantic category associations, structure timestamps, and calculate totals instantly.
 
 # Monthly Financial Insights: 
-    Automated first-of-the-month background evaluation pipelines that read user patterns and write targeted, actionable financial guidance.
+Automated first-of-the-month background evaluation pipelines that read user patterns and write targeted, actionable financial guidance.
 
 ## 🛡️ Enterprise-Grade Security (Arcjet)
 # Transactional Rate Limiting:
-     Advanced token-bucket controllers managing mutations across API networks to protect the server from automated high-frequency script attacks.
+Advanced token-bucket controllers managing mutations across API networks to protect the server from automated high-frequency script attacks.
 
 # Automated Bot Shield:
-     Core traffic filtering layers safeguarding platform pathways from malicious automated agents while safely allowing standard search engine and web crawlers.
+Core traffic filtering layers safeguarding platform pathways from malicious automated agents while safely allowing standard search engine and web crawlers.
 
 ## ⚙️ Background Event Architectures (Inngest)
 # Automated Cron Scheduling:
-     Scheduled background operations checking operational metrics, managing budgets, and distributing monthly email digests natively.
+Scheduled background operations checking operational metrics, managing budgets, and distributing monthly email digests natively.
 
 # Throttled Event Loops:
-     Sophisticated event batching controls restricting execution queues to 10 instances per minute per user to keep multi-user processes stable.
+Sophisticated event batching controls restricting execution queues to 10 instances per minute per user to keep multi-user processes stable.
 
 ## 🛠️ Core Tech Stack
 # Frontend Framework:
-     Next.js (App Router, Turbopack Compilation Engine)
+Next.js (App Router, Turbopack Compilation Engine)
 
 # UI Foundation:
-     React 19, Tailwind CSS, Shadcn UI Components, Lucide Icons, React Spinners
+React 19, Tailwind CSS, Shadcn UI Components, Lucide Icons, React Spinners
 
 # Authentication & Profiles:
-     Clerk Auth Engine (Optimized with Custom Dark Theme Elements)
+Clerk Auth Engine (Optimized with Custom Dark Theme Elements)
 
 # Database & Layer Management:
-     Supabase (PostgreSQL), Prisma ORM (Relational Data Pipelines)
+Supabase (PostgreSQL), Prisma ORM (Relational Data Pipelines)
 
 # AI Processing Engine:
-     Google Generative AI (Gemini 1.5 Flash Model Core)
+Google Generative AI (Gemini 1.5 Flash Model Core)
 
 # Application Security:
-     Arcjet Security Integration Shield
+Arcjet Security Integration Shield
 
 # Event & Task Infrastructure:
-     Inngest Event Pipeline Framework
+Inngest Event Pipeline Framework
 
 # Email Layer Templates:
-     Resend API Core paired with React Email Components
+Resend API Core paired with React Email Components
 
 # Data Visualization:
-     Recharts (Responsive Vector Area/Bar Graphs)
+Recharts (Responsive Vector Area/Bar Graphs)
 
 ## ⚙️ Local Installation & Development
-    To spin up Kuber locally, ensure your machine has Node.js installed, then follow this step-by-step setup script:
+To spin up Kuber locally, ensure your machine has Node.js installed, then follow this step-by-step setup script:
 
 # 1. Clone & Configuration
-    Clone the repository path and initialize your configuration layer:
+Clone the repository path and initialize your configuration layer:
 
 ```Bash
 git clone https://github.com/Mr-Prince2/ai_finance_platform.git
@@ -91,21 +91,21 @@ RESEND_API_KEY=re_...
 ```
 
 # 2. Install Core Dependencies
-    Install the explicit dependency packages matching your platform's React 19 and Next.js layers:
+Install the explicit dependency packages matching your platform's React 19 and Next.js layers:
 
 ```Bash
 npm install --legacy-peer-deps
 ```
 
 # 3. Sync Your Database Schemas
-    Push your local structural configurations straight to your relational database instances via Prisma:
+Push your local structural configurations straight to your relational database instances via Prisma:
 
 ```Bash
 npx prisma migrate dev --name init
 ```
 
 # 4. Run the Dev Server
-    Launch your local Next.js environment running with native Turbopack compilation:
+Launch your local Next.js environment running with native Turbopack compilation:
 
 ```Bash
 npm run dev
@@ -113,7 +113,7 @@ npm run dev
 Your user dashboard will load live at http://localhost:3000.
 
 # 5. Launch the Local Background Inngest Engine
-    Open a separate terminal window to host your background event-driven micro-services locally:
+Open a separate terminal window to host your background event-driven micro-services locally:
 
 ```Bash
 npx inngest-cli@latest dev -u http://localhost:3000/api/inngest
@@ -122,11 +122,11 @@ npx inngest-cli@latest dev -u http://localhost:3000/api/inngest
 Access the background execution metrics and manual task invocation board at http://localhost:8288.
 
 ## 📦 Deployment
-    This project is fully optimized for single-click deployments on Vercel:
+This project is fully optimized for single-click deployments on Vercel:
 
-    Link your GitHub repository to your Vercel Dashboard.
+Link your GitHub repository to your Vercel Dashboard.
 
-    In the Build and Output Settings, append your legacy resolution installer rules into the install command field override:
+In the Build and Output Settings, append your legacy resolution installer rules into the install command field override:
 
 ```Bash
 npm install --legacy-peer-deps
