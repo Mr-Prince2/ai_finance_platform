@@ -41,7 +41,7 @@ const HeroSection = () => {
               Get Started
             </Button>
           </Link>
-          <Link href="https://github.com/Mr-Prince2/AI_POWERED_PERSONAL_FINANCE_ANALYZER.git">
+          <Link href="https://github.com/Mr-Prince2/ai_finance_platform.git">
             <Button size="lg" variant="outline" className="px-8 border-slate-800 text-slate-300 hover:bg-slate-900 rounded-xl">
               GitHub Repo
             </Button>
